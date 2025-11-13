@@ -10,17 +10,64 @@ const theme = extendTheme({
         light: {
             palette: {
                 primary: {
-                    main: '#ada8a8ff',
+                    main: '#161616ff',
                 },
             },
         },
         dark: {
             palette: {
                 primary: {
-                    main: '#000',
+                    main: '#ecececff',
                 },
             },
         },
+    },
+    components: {
+        // Name of the component
+        MuiButton: {
+            styleOverrides: {
+                // Name of the slot
+                root: {
+                    textTransform: 'none',
+                },
+            },
+        },
+        MuiInputLabel: {
+            styleOverrides: {
+                // Name of the slot
+                root: ({ theme }) => ({
+                    color: theme.palette.primary.main,
+                    fontSize: '0.875rem',
+                }),
+            },
+        },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                // Name of the slot
+                root: ({ theme }) => ({
+                    color: theme.palette.primary.main,
+                    fontSize: '0.875rem',
+                    '.MuiOutlinedInput-notchedOutline': {
+                        borderColor: theme.palette.primary.light,
+                    },
+                    '&:hover': {
+                        '.MuiOutlinedInput-notchedOutline': {
+                            borderColor: theme.palette.primary.main,
+                        },
+                    },
+                    '& fieldset': {
+                        borderWidth: '1px !important',
+                    },
+                }),
+            },
+        },
+        MuiSvgIcon:{
+            styleOverrides: {
+                root: ({theme}) => ({
+                    color: theme.palette.primary.main,
+                })
+            }
+        }
     },
     // ...other properties
 });
