@@ -15,17 +15,20 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import Tooltip from '@mui/material/Tooltip';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Profiles from './Menus/Profiles';
+import AddIcon from '@mui/icons-material/Add';
 
 function AppBar() {
     return (
         <Box
-            px={2}
             sx={{
                 height: (theme) => theme.trello.appBarHeight,
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
+                gap: 2,
+                paddingX: 2,
+                overflowX: 'auto',
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -34,8 +37,8 @@ function AppBar() {
                     <SvgIcon
                         component={TrelloIcon}
                         inheritViewBox
-                        fontSize = 'small'
-                        sx={{ color: 'primary.main',}}  
+                        fontSize="small"
+                        sx={{ color: 'primary.main' }}
                     />
                     <Typography
                         variant="span"
@@ -48,11 +51,13 @@ function AppBar() {
                         Trello
                     </Typography>
                 </Box>
-                <Workspaces />
-                <Recent />
-                <Starred />
-                <Templates />
-                <Button variant="outlined">Create</Button>
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+                    <Workspaces />
+                    <Recent />
+                    <Starred />
+                    <Templates />
+                    <Button variant="outlined" startIcon={<AddIcon/>}>Create</Button>
+                </Box>
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -61,6 +66,7 @@ function AppBar() {
                     label="Search..."
                     type="search"
                     size="small"
+                    sx={{ minWidth: '120px' }}
                 />
                 <ModeSelect />
                 <Tooltip title="Notification">
@@ -69,14 +75,16 @@ function AppBar() {
                         variant="dot"
                         sx={{ cursor: 'pointer' }}
                     >
-                        <NotificationsNoneIcon sx={{color:'primary.main'}} />
+                        <NotificationsNoneIcon sx={{ color: 'primary.main' }} />
                     </Badge>
                 </Tooltip>
 
                 <Tooltip title="Help">
-                    <HelpOutlineIcon sx={{cursor:'pointer', color:'primary.main'}} />
+                    <HelpOutlineIcon
+                        sx={{ cursor: 'pointer', color: 'primary.main' }}
+                    />
                 </Tooltip>
-                <Profiles/>
+                <Profiles />
             </Box>
         </Box>
     );
