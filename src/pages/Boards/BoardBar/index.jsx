@@ -12,10 +12,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 const MENU_STYLE = {
-    color: 'primary.main',
-    bgcolor: (theme) => {
-        theme.colorSchemes.dark;
-    },
+    color: (theme) => (theme.palette.mode === 'dark' ? 'white' : '#2B2B2B'),
+    backgroundColor: 'transparent',
     border: 'none',
     paddingX: '5px',
     borderRadius: '4px',
@@ -31,6 +29,8 @@ function BoardBar() {
     return (
         <Box
             sx={{
+                backgroundColor: (theme) =>
+                    theme.palette.mode === 'light' ? '#fafafa' : '#3f3f46',
                 height: (theme) => theme.trello.boardBarHeight,
                 width: '100%',
                 display: 'flex',
@@ -39,7 +39,10 @@ function BoardBar() {
                 paddingX: 2,
                 overflowX: 'auto',
                 alignItems: 'center',
-                borderTop: '1px solid #000000',
+                borderBottom: (theme) =>
+                    theme.palette.mode === 'light'
+                        ? '1px solid black'
+                        : '1px solid white',
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -78,16 +81,18 @@ function BoardBar() {
                 />
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Button variant="outlined" startIcon={<AddIcon/>}>
+                <Button variant="outlined" startIcon={<AddIcon />}>
                     Invite
                 </Button>
                 <AvatarGroup
                     max={7}
                     sx={{
+                        gap: '10px',
                         '& .MuiAvatar-root': {
                             width: '34px',
                             height: '34px',
                             fontSize: 16,
+                            border: 'none'
                         },
                     }}
                 >

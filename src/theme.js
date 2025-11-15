@@ -11,7 +11,7 @@ const theme = extendTheme(
             light: {
                 palette: {
                     primary: {
-                        main: '#161616ff',
+                        main: '#464646',
                     },
                 },
             },
@@ -46,36 +46,33 @@ const theme = extendTheme(
                     // Name of the slot
                     root: {
                         textTransform: 'none',
+                        borderWidth: '0.5px',
                     },
                 },
             },
             MuiInputLabel: {
                 styleOverrides: {
                     // Name of the slot
-                    root: ({ theme }) => ({
-                        color: theme.palette.primary.main,
+                    root: {
                         fontSize: '0.875rem',
-                    }),
+                    },
                 },
             },
             MuiOutlinedInput: {
                 styleOverrides: {
                     // Name of the slot
-                    root: ({ theme }) => ({
-                        color: theme.palette.primary.main,
+                    root:{
                         fontSize: '0.875rem',
-                        '.MuiOutlinedInput-notchedOutline': {
-                            borderColor: theme.palette.primary.light,
-                        },
-                        '&:hover': {
-                            '.MuiOutlinedInput-notchedOutline': {
-                                borderColor: theme.palette.primary.main,
-                            },
-                        },
                         '& fieldset': {
+                            borderWidth: '0.5px !important',
+                        },
+                        '&:hover fieldset': {
                             borderWidth: '1px !important',
                         },
-                    }),
+                        '&.Mui-focused fieldset': {
+                            borderWidth: '1px !important',
+                        },
+                    },
                 },
             },
             MuiSvgIcon: {

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import ModeSelect from '@/components/ModeSelect';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -16,8 +17,13 @@ import Tooltip from '@mui/material/Tooltip';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Profiles from './Menus/Profiles';
 import AddIcon from '@mui/icons-material/Add';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 
 function AppBar() {
+    const [searchValue, setSearchValue] = useState('');
+
     return (
         <Box
             sx={{
@@ -29,6 +35,8 @@ function AppBar() {
                 gap: 2,
                 paddingX: 2,
                 overflowX: 'auto',
+                backgroundColor: (theme) =>
+                    theme.palette.mode === 'light' ? '#e4e4e7' : '#27272a',
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -56,7 +64,18 @@ function AppBar() {
                     <Recent />
                     <Starred />
                     <Templates />
-                    <Button variant="outlined" startIcon={<AddIcon/>}>Create</Button>
+                    <Button
+                        sx={{
+                            border: 'none',
+                            '&:hover': {
+                                border: 'none',
+                            },
+                        }}
+                        variant="outlined"
+                        startIcon={<AddIcon />}
+                    >
+                        Create
+                    </Button>
                 </Box>
             </Box>
 
@@ -64,14 +83,34 @@ function AppBar() {
                 <TextField
                     id="outlined-search"
                     label="Search..."
-                    type="search"
+                    type="text"
                     size="small"
-                    sx={{ minWidth: '120px' }}
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        ),
+                        endAdornment: searchValue.length > 0 && (
+                            <InputAdornment position="end">
+                                <CloseIcon
+                                    onClick={() => setSearchValue('')}
+                                    sx={{
+                                        fontSize: 'small',
+                                        cursor: 'pointer',
+                                    }}
+                                />
+                            </InputAdornment>
+                        ),
+                    }}
+                    sx={{ minWidth: '120px', maxWidth: '170px' }}
                 />
                 <ModeSelect />
                 <Tooltip title="Notification">
                     <Badge
-                        color="secondary"
+                        color="warning"
                         variant="dot"
                         sx={{ cursor: 'pointer' }}
                     >
