@@ -3,7 +3,7 @@ import React from 'react';
 import Column from './Column/Column';
 import Button from '@mui/material/Button';
 import LoupeIcon from '@mui/icons-material/Loupe';
-function ListColumns() {
+function ListColumns({ columns }) {
     return (
         <Box
             sx={{
@@ -17,7 +17,11 @@ function ListColumns() {
             }}
         >
             {/* Column */}
-            <Column />
+            {columns?.map((column) => (
+                <Column key={column._id} />
+            ))}
+
+            {/* Add new column button */}
             <Box
                 sx={{
                     minWidth: '180px',
