@@ -38,11 +38,7 @@ function BoardBar() {
                 gap: 2,
                 paddingX: 2,
                 overflowX: 'auto',
-                alignItems: 'center',
-                borderBottom: (theme) =>
-                    theme.palette.mode === 'light'
-                        ? '1px solid black'
-                        : '1px solid white',
+                alignItems: 'center',            
                 '&::-webkit-scrollbar-track': { m: 2 },
             }}
         >
