@@ -16,18 +16,10 @@ import ContentCopy from '@mui/icons-material/ContentCopy';
 import ContentPaste from '@mui/icons-material/ContentPaste';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import IosShareIcon from '@mui/icons-material/IosShare';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ListCards from './ListCards/ListCards';
+import { mapOrder } from '@/utils/sorts';
 
-
-
-function Column() {
+function Column({ column }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -36,6 +28,7 @@ function Column() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id');
     return (
         <Box
             sx={{
@@ -77,7 +70,7 @@ function Column() {
                         color: 'primary.contrastText',
                     }}
                 >
-                    Column Title
+                    {column?.title}
                 </Typography>
                 <Box>
                     <Tooltip title="More options">
@@ -145,7 +138,7 @@ function Column() {
                 </Box>
             </Box>
             {/* BODY */}
-            <ListCards />
+            <ListCards cards = {orderedCards} />
             {/* FOOTER */}
             <Box
                 sx={{
