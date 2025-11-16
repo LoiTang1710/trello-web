@@ -43,6 +43,7 @@ function BoardBar() {
                     theme.palette.mode === 'light'
                         ? '1px solid black'
                         : '1px solid white',
+                '&::-webkit-scrollbar-track': { m: 2 },
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -92,7 +93,8 @@ function BoardBar() {
                             width: '34px',
                             height: '34px',
                             fontSize: 16,
-                            border: 'none'
+                            border: 'none',
+                            cursor: 'pointer',
                         },
                     }}
                 >
