@@ -10,6 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
+import { capitalizeFirstLetter } from '@/utils/formatters.js';
 
 const MENU_STYLE = {
     color: (theme) => (theme.palette.mode === 'dark' ? 'white' : '#2B2B2B'),
@@ -25,7 +26,7 @@ const MENU_STYLE = {
     },
 };
 
-function BoardBar() {
+function BoardBar({ board }) {
     return (
         <Box
             sx={{
@@ -38,7 +39,7 @@ function BoardBar() {
                 gap: 2,
                 paddingX: 2,
                 overflowX: 'auto',
-                alignItems: 'center',            
+                alignItems: 'center',
                 '&::-webkit-scrollbar-track': { m: 2 },
             }}
         >
@@ -47,14 +48,14 @@ function BoardBar() {
                 <Chip
                     sx={MENU_STYLE}
                     icon={<DashboardCustomizeIcon />}
-                    label="Dashboard Customize"
+                    label={board?.title}
                     clickable
                 />
                 {/* Public/Private */}
                 <Chip
                     sx={MENU_STYLE}
                     icon={<VpnLockIcon />}
-                    label="Public/Private WorkSpaces"
+                    label= {capitalizeFirstLetter(board?.type)}
                     clickable
                 />
                 {/* Google Drive */}
