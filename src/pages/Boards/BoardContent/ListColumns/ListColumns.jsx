@@ -18,7 +18,7 @@ function ListColumns({ columns }) {
         >
             {/* Column */}
             {columns?.map((column) => (
-                <Column key={column._id} />
+                <Column key={column._id} column = {column} />
             ))}
 
             {/* Add new column button */}
