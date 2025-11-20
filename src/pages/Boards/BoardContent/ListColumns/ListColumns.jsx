@@ -7,7 +7,7 @@ import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortabl
 function ListColumns({ columns }) {
     return (
         <SortableContext
-            items={columns?.map(c => c._id)}
+            items={columns?.map((c) => c._id)}
             strategy={horizontalListSortingStrategy}
         >
             <Box
@@ -38,8 +38,22 @@ function ListColumns({ columns }) {
                     }}
                 >
                     <Button
-                        sx={{ width: '100%', px: 2, py: 1 }}
-                        startIcon={<LoupeIcon />}
+                        sx={{
+                            width: '100%',
+                            px: 2,
+                            py: 1,
+                            color: (theme) =>
+                                theme.palette.mode === 'light'
+                                    ? 'primary.main'
+                                    : 'primary.contrastText',
+                        }}
+                        startIcon={
+                            <LoupeIcon
+                                sx={{
+                                    color: 'inherit',
+                                }}
+                            />
+                        }
                     >
                         Add new column
                     </Button>
