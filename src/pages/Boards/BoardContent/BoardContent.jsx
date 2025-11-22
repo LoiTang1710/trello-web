@@ -11,9 +11,9 @@ import {
     DragOverlay,
     defaultDropAnimationSideEffects,
     closestCorners,
-    closestCenter,
+    // closestCenter,
     pointerWithin,
-    rectIntersection,
+    // rectIntersection,
     getFirstCollision,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
@@ -64,13 +64,14 @@ function BoardContent({ board }) {
             }
             // tim cac diem va cham voi pointer
             const pointerIntersections = pointerWithin(args);
+            if(!pointerIntersections?.length) return;
             //
-            const intersections = !!pointerIntersections?.length
-                ? pointerIntersections
-                : rectIntersection(args);
+            // const intersections = !!pointerIntersections?.length
+            //     ? pointerIntersections
+            //     : rectIntersection(args);
 
             // tim id dau tien trong intersections ( thuat toan va cham )
-            let overId = getFirstCollision(intersections, 'id');
+            let overId = getFirstCollision(pointerIntersections, 'id');
             // console.log('overId: ', overId);
             if (overId) {
                 const checkColumn = orderedColums.find(
@@ -78,7 +79,7 @@ function BoardContent({ board }) {
                 );
                 if (checkColumn) {
                     console.log("overId Before: ", overId)
-                    overId = closestCenter({
+                    overId = closestCorners({
                         ...args,
                         droppableContainers: args.droppableContainers.filter(
                             (container) =>
