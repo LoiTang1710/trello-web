@@ -12,6 +12,7 @@ export default defineConfig([
             js.configs.recommended,
             reactHooks.configs['recommended-latest'],
             reactRefresh.configs.vite,
+            'plugin:react-hooks-unreliable-deps/recommended',
         ],
         languageOptions: {
             ecmaVersion: 2020,
@@ -30,6 +31,8 @@ export default defineConfig([
                     patterns: [{ regex: '^@mui/[^/]+$' }],
                 },
             ],
+            'no-extra-boolean-cast': 0,
+            'react-hooks/exhaustive-deps': 'error',
         },
     },
 ]);

@@ -11,9 +11,13 @@ import {
     DragOverlay,
     defaultDropAnimationSideEffects,
     closestCorners,
+    closestCenter,
+    pointerWithin,
+    rectIntersection,
+    getFirstCollision,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { cloneDeep } from 'lodash';
 
 import Column from './ListColumns/Column/Column';
@@ -41,6 +45,9 @@ function BoardContent({ board }) {
     const [activeDragItemData, setActiveDragItemData] = useState(null);
     const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] =
         useState(null);
+
+    // Diem va cham cuoi cung
+    const lastOverId = useRef(null);
     const customDropAnimation = {
         sideEffects: defaultDropAnimationSideEffects({
             styles: {
@@ -50,6 +57,47 @@ function BoardContent({ board }) {
             },
         }),
     };
+    const collisionDetectionStrategy = useCallback(
+        (args) => {
+            if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+                return closestCorners({ ...args });
+            }
+            // tim cac diem va cham voi pointer
+            const pointerIntersections = pointerWithin(args);
+            //
+            const intersections = !!pointerIntersections?.length
+                ? pointerIntersections
+                : rectIntersection(args);
+
+            // tim id dau tien trong intersections ( thuat toan va cham )
+            let overId = getFirstCollision(intersections, 'id');
+            // console.log('overId: ', overId);
+            if (overId) {
+                const checkColumn = orderedColums.find(
+                    (column) => column._id === overId
+                );
+                if (checkColumn) {
+                    console.log("overId Before: ", overId)
+                    overId = closestCenter({
+                        ...args,
+                        droppableContainers: args.droppableContainers.filter(
+                            (container) =>
+                                container.id !== overId &&
+                                checkColumn?.cardOrderIds?.includes(
+                                    container.id
+                                )
+                        ),
+                    })[0]?.id;
+                    console.log("overId after: ", overId)
+                }
+
+                lastOverId.current = overId;
+                return [{ id: overId }];
+            }
+            return lastOverId.current ? [{ id: lastOverId.current }] : [];
+        },
+        [activeDragItemType, orderedColums]
+    );
 
     useEffect(() => {
         setOrderedColums(
@@ -72,7 +120,7 @@ function BoardContent({ board }) {
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData,
+        activeDraggingCardData
     ) => {
         setOrderedColums((prevColumn) => {
             const overCardIndex = overColumn?.cards?.findIndex(
@@ -265,7 +313,9 @@ function BoardContent({ board }) {
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
             sensors={sensors}
-            collisionDetection={closestCorners}
+            // voi closetsCorner hay closetsCenter deu gay ra bug flickering
+            // customing thuat toan va cham
+            collisionDetection={collisionDetectionStrategy}
         >
             <Box
                 sx={{
