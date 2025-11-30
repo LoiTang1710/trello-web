@@ -18,7 +18,8 @@ import {
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
+import { generatePlaceholderCard } from '@/utils/formatters';
 
 import Column from './ListColumns/Column/Column';
 import Card from './ListColumns/Column/ListCards/Card/Card';
@@ -64,7 +65,7 @@ function BoardContent({ board }) {
             }
             // tim cac diem va cham voi pointer
             const pointerIntersections = pointerWithin(args);
-            if(!pointerIntersections?.length) return;
+            if (!pointerIntersections?.length) return;
             //
             // const intersections = !!pointerIntersections?.length
             //     ? pointerIntersections
@@ -78,7 +79,7 @@ function BoardContent({ board }) {
                     (column) => column._id === overId
                 );
                 if (checkColumn) {
-                    console.log("overId Before: ", overId)
+                    console.log('overId Before: ', overId);
                     overId = closestCorners({
                         ...args,
                         droppableContainers: args.droppableContainers.filter(
@@ -89,7 +90,7 @@ function BoardContent({ board }) {
                                 )
                         ),
                     })[0]?.id;
-                    console.log("overId after: ", overId)
+                    console.log('overId after: ', overId);
                 }
 
                 lastOverId.current = overId;
@@ -154,6 +155,10 @@ function BoardContent({ board }) {
                 nextActiveColumn.cards = nextActiveColumn.cards.filter(
                     (card) => card._id !== activeDraggingCardId
                 );
+
+                if (isEmpty(nextActiveColumn.cards)) {
+                    nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+                }
                 nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(
                     (card) => card._id
                 );
@@ -173,6 +178,11 @@ function BoardContent({ board }) {
                     newCardIndex,
                     0,
                     rebuild_activeDraggingCardData
+                );
+
+                // xoa placeholder card
+                nextOverColumn.cards = nextOverColumn.cards.filter(
+                    (card) => !card.FE_PlaceholderCard
                 );
                 nextOverColumn.cardOrderIds = nextOverColumn.cards.map(
                     (card) => card._id

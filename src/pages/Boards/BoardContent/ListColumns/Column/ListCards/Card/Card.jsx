@@ -48,6 +48,7 @@ function Card({ card }) {
                         ? 'inset 0 -1px 3px rgba(0,0,0,0.5)'
                         : '0 1px 3px rgba(0,0,0,0.5)',
                 overflow: 'unset',
+                display: card?.FE_PlaceholderCard ? 'none' : 'block',
             }}
         >
             {card?.cover && (
