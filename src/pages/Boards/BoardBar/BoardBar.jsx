@@ -44,18 +44,20 @@ function BoardBar({ board }) {
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                {/* DashBoard */}
-                <Chip
-                    sx={MENU_STYLE}
-                    icon={<DashboardCustomizeIcon />}
-                    label={board?.title}
-                    clickable
-                />
+                <Tooltip title={board?.description}>
+                    {/* DashBoard */}
+                    <Chip
+                        sx={MENU_STYLE}
+                        icon={<DashboardCustomizeIcon />}
+                        label={board?.title}
+                        clickable
+                    />
+                </Tooltip>
                 {/* Public/Private */}
                 <Chip
                     sx={MENU_STYLE}
                     icon={<VpnLockIcon />}
-                    label= {capitalizeFirstLetter(board?.type)}
+                    label={capitalizeFirstLetter(board?.type)}
                     clickable
                 />
                 {/* Google Drive */}
