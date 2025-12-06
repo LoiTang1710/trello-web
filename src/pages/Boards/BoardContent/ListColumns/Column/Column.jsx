@@ -23,6 +23,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
+import { toast } from 'react-toastify';
 
 function Column({ column }) {
     const {
@@ -56,7 +57,7 @@ function Column({ column }) {
     const [newCardTitle, setNewCardTitle] = useState('');
     const addNewCard = () => {
         if (!newCardTitle) {
-            // console.error('please enter column title')
+            toast.error('please enter card title!', {position:"bottom-right", closeOnClick: true})
             return;
         }
         // console.log(newCardTitle)
