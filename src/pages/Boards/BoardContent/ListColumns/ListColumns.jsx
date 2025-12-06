@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import Column from './Column/Column';
 import Button from '@mui/material/Button';
@@ -14,9 +15,14 @@ function ListColumns({ columns }) {
     const toggleOpenNewColumnForm = () =>
         setOpenNewColumnForm(!openNewColumnForm);
     const [newColumnTitle, setNewColumnTitle] = useState('');
+
     const addNewColumn = () => {
         if(!newColumnTitle){
-            // console.error('please enter column title')
+            try {
+                toast.error('please enter column title!');
+            } catch (e) {
+                console.error('Toast failed', e);
+            }
             return
         }
         // console.log(newColumnTitle)
@@ -30,6 +36,7 @@ function ListColumns({ columns }) {
     return (
         <SortableContext
             items={columns?.map((c) => c._id)}
+            // items={(columns || []).map((c) => c?._id || '')}
             strategy={horizontalListSortingStrategy}
         >
             <Box
@@ -70,7 +77,7 @@ function ListColumns({ columns }) {
                                 color: (theme) =>
                                     theme.palette.mode === 'light'
                                         ? 'primary.main'
-                                        : 'primary.contrastText',
+                                        : 'black',
                             }}
                             startIcon={
                                 <LoupeIcon
@@ -110,14 +117,23 @@ function ListColumns({ columns }) {
                                 '& label': { color: 'black' },
                                 '& input': { color: 'black' },
                                 '& label.Mui-focused': { color: 'black' },
+                                '& .MuiInputLabel-root.Mui-focused': {
+                                    color: 'black', // Màu label khi focus
+                                },
                                 '& .MuiOutlinedInput-root': {
-                                    '& fieldset': { borderColor: 'black' },
+                                    // color: 'white',
+                                    '& fieldset': {
+                                        borderColor: 'black',
+                                    },
                                     '&:hover fieldset': {
                                         borderColor: 'black',
                                     },
-                                    '&Mui-focused fieldset': {
+                                    '&.Mui-focused fieldset': {
                                         borderColor: 'black',
                                     },
+                                },
+                                '& .MuiOutlinedInput-input': {
+                                    borderRadius: 1,
                                 },
                             }}
                         />
