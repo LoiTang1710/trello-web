@@ -16,10 +16,16 @@ function ListColumns({ columns }) {
     const [newColumnTitle, setNewColumnTitle] = useState('');
     const addNewColumn = () => {
         if(!newColumnTitle){
-            console.error('please enter column title')
+            // console.error('please enter column title')
             return
         }
-        console.log(newColumnTitle)
+        // console.log(newColumnTitle)
+        // goi api...
+        
+
+        //dong trang thai va clear input
+        toggleOpenNewColumnForm()
+        setNewColumnTitle('')
     }
     return (
         <SortableContext

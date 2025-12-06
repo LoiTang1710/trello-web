@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 // import { useParams } from 'react-router-dom';
 import { fetchBoardDetailsAPI } from '@/apis';
 import { useParams } from 'react-router-dom';
+import { mockData } from '@/apis/mock-datas';
 
 function Board() {
     //https://react.dev/reference/react/useState
@@ -27,8 +28,8 @@ function Board() {
     return (
         <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
             <AppBar />
-            <BoardBar board={board} />
-            <BoardContent board={board} />
+            <BoardBar board={mockData?.board} />
+            <BoardContent board={mockData?.board} />
         </Container>
     );
 }

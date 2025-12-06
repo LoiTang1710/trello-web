@@ -49,6 +49,8 @@ function Card({ card }) {
                         : '0 1px 3px rgba(0,0,0,0.5)',
                 overflow: 'unset',
                 display: card?.FE_PlaceholderCard ? 'none' : 'block',
+                // border: '1px solid transparent',
+                '&:hover': {borderColor: (theme)=>theme.palette.primary.main}
             }}
         >
             {card?.cover && (
