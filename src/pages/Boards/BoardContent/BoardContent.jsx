@@ -31,7 +31,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
     CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD',
 };
 
-function BoardContent({ board }) {
+function BoardContent({ board, createNewColumn, createNewCard }) {
     // const pointerSensor = useSensor(PointerSensor, {activationConstraint: {distance: 10}})
     const mouseSensor = useSensor(MouseSensor, {
         activationConstraint: { distance: 10 },
@@ -158,7 +158,9 @@ function BoardContent({ board }) {
                 );
 
                 if (isEmpty(nextActiveColumn.cards)) {
-                    nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+                    nextActiveColumn.cards = [
+                        generatePlaceholderCard(nextActiveColumn),
+                    ];
                 }
                 nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(
                     (card) => card._id
@@ -338,7 +340,11 @@ function BoardContent({ board }) {
                     p: '10px 0',
                 }}
             >
-                <ListColumns columns={orderedColums} />
+                <ListColumns
+                    columns={orderedColums}
+                    createNewColumn={createNewColumn}
+                    createNewCard={createNewCard}
+                />
                 <ErrorBoundary fallback="Error">
                     <DragOverlay dropAnimation={customDropAnimation}>
                         {!activeDragItemType && null}
