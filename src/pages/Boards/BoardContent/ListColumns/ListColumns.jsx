@@ -10,29 +10,26 @@ import {
     SortableContext,
     horizontalListSortingStrategy,
 } from '@dnd-kit/sortable';
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
     const [openNewColumnForm, setOpenNewColumnForm] = useState(false);
     const toggleOpenNewColumnForm = () =>
         setOpenNewColumnForm(!openNewColumnForm);
     const [newColumnTitle, setNewColumnTitle] = useState('');
 
-    const addNewColumn = () => {
-        if(!newColumnTitle){
-            try {
-                toast.error('please enter column title!');
-            } catch (e) {
-                console.error('Toast failed', e);
-            }
-            return
+    const addNewColumn = async () => {
+        if (!newColumnTitle) {
+            toast.error('please enter column title!');
+            return;
         }
-        // console.log(newColumnTitle)
+        const newColumnData = {
+            title: newColumnTitle,
+        };
         // goi api...
-        
-
+        await createNewColumn(newColumnData);
         //dong trang thai va clear input
-        toggleOpenNewColumnForm()
-        setNewColumnTitle('')
-    }
+        toggleOpenNewColumnForm();
+        setNewColumnTitle('');
+    };
     return (
         <SortableContext
             items={columns?.map((c) => c._id)}
@@ -52,7 +49,11 @@ function ListColumns({ columns }) {
             >
                 {/* Column */}
                 {columns?.map((column) => (
-                    <Column key={column._id} column={column} />
+                    <Column
+                        key={column._id}
+                        column={column}
+                        createNewCard={createNewCard}
+                    />
                 ))}
 
                 {/* Add new column button */}
